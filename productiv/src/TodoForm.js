@@ -15,8 +15,9 @@ let INITIAL_FORM_DATA =    {
  * { TodoApp, EditableTodo } -> TodoForm
  */
 
-function TodoForm({initialFormData = INITIAL_FORM_DATA, handleSave}) {
-  let [value, setValue] = useState(initialFormData);
+function TodoForm({initialFormData, handleSave}) {
+
+  let [formData, setFormData] = useState(initialFormData || INITIAL_FORM_DATA);
 
   /** Update form input. */
   function handleChange(evt) {
@@ -25,15 +26,15 @@ function TodoForm({initialFormData = INITIAL_FORM_DATA, handleSave}) {
     //getting the input's value
     let fieldValue = evt.target.value;
     //changing state by changing the value
-    setValue(currentValue => {currentValue[fieldName]= fieldValue;
+    setFormData(currentValue => {currentValue[fieldName]= fieldValue;
       return {...currentValue}});
   }
 
   /** Call parent function and clear form. */
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleSave(value);
-    setValue(initialFormData);
+    handleSave(formData);
+    // setFormData(INITIAL_FORM_DATA);
   }
 
   return (
@@ -46,7 +47,7 @@ function TodoForm({initialFormData = INITIAL_FORM_DATA, handleSave}) {
               className="form-control"
               placeholder="Title"
               onChange={handleChange}
-              value={value.title}
+              value={formData.title}
               aria-label="Title"
           />
         </div>
@@ -58,7 +59,7 @@ function TodoForm({initialFormData = INITIAL_FORM_DATA, handleSave}) {
               className="form-control"
               placeholder="Description"
               onChange={handleChange}
-              value={value.description}
+              value={formData.description}
               aria-label="Description"
           />
         </div>
@@ -70,7 +71,7 @@ function TodoForm({initialFormData = INITIAL_FORM_DATA, handleSave}) {
             </label>
             <select id="newTodo-priority"
                     name="priority"
-                    value={value.priority}
+                    value={formData.priority}
                     onChange={handleChange}
                     className="form-control form-control-sm d-inline-flex"
             >

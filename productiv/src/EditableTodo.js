@@ -27,7 +27,7 @@ function EditableTodo({todo, update, remove}) {
 
   /** Edit form saved; toggle isEditing and update in ancestor. */
   function handleSave(formData) {
-    toggleEdit()
+    toggleEdit();
     update(formData);
   }
 
@@ -53,7 +53,7 @@ function EditableTodo({todo, update, remove}) {
                       Del
                     </button>
                   </div>
-                  <Todo title={todo.title} description={todo.description} priority={todo.priority}/>
+                  <Todo todo={todo}/>
                 </div>
 }
       </div>

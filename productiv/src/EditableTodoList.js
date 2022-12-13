@@ -15,13 +15,13 @@ function EditableTodoList({todos, update, remove}) {
 
   return (
       <div>
-        {todos.map(todo =>
+        {todos.map(todo => (
             <EditableTodo
                 key={todo.id}
                 update={update}
                 remove={remove}
                 todo={todo}
-            />)}
+            />))}
       </div>
   );
 }

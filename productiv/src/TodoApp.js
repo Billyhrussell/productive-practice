@@ -30,11 +30,21 @@ const [todos, setTodos] = useState(initialTodos);
   /** update a todo with updatedTodo */
   //passed to editableTodoList -> editableTodo
   function update(updatedTodo) {
-    for(let todo of todos){
-      if(todo.id === updatedTodo.id){
-        todo = updatedTodo;
+    //inefficient but works
+    // for(let todo of todos){
+    //   if(todo.id === updatedTodo.id){
+    //     todo.title = updatedTodo.title;
+    //     todo.description = updatedTodo.description;
+    //     todo.priority = updatedTodo.priority;
+    //   }
+    // }
+
+    for(let i=0; i < todos.length; i++){
+      if(todos[i].id === updatedTodo.id){
+        todos[i] = updatedTodo;
       }
     }
+
     let newTodos = [...todos];
     setTodos(newTodos);
   }
@@ -56,10 +66,11 @@ const [todos, setTodos] = useState(initialTodos);
           </div>
 
           <div className="col-md-6">
+            
             (if no top todo, omit this whole section)
             <section className="mb-4">
               <h3>Top Todo</h3>
-              <TopTodo />
+              <TopTodo todos={todos}/>
             </section>
 
             <section>
