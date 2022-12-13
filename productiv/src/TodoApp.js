@@ -51,8 +51,8 @@ const [todos, setTodos] = useState(initialTodos);
         <div className="row">
 
           <div className="col-md-6">
-            <EditableTodoList update={update} remove={remove}/> OR
-            <span className="text-muted">You have no todos.</span>
+            {todos.length > 0 ? <EditableTodoList update={update} remove={remove} todos={todos}/> :
+            <span className="text-muted">You have no todos.</span>}
           </div>
 
           <div className="col-md-6">
