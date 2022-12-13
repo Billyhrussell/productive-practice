@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 
+let INITIAL_FORM_DATA =    {
+  title: "",
+  description: "",
+  priority: 1,
+}
 
 /** Form for adding.
  *
@@ -10,13 +15,26 @@ import React, { useState } from "react";
  * { TodoApp, EditableTodo } -> TodoForm
  */
 
-function TodoForm() {
+function TodoForm({initialFormData = INITIAL_FORM_DATA, handleSave}) {
+  let [value, setValue] = useState(initialFormData);
 
   /** Update form input. */
-  function handleChange(evt) { }
+  function handleChange(evt) {
+    // getting the input's name
+    let fieldName = evt.target.name;
+    //getting the input's value
+    let fieldValue = evt.target.value;
+    //changing state by changing the value
+    setValue(currentValue => {currentValue[fieldName]= fieldValue;
+      return {...currentValue}});
+  }
 
   /** Call parent function and clear form. */
-  function handleSubmit(evt) { }
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleSave(value);
+    setValue(initialFormData);
+  }
 
   return (
       <form className="NewTodoForm" onSubmit={handleSubmit}>
@@ -28,7 +46,7 @@ function TodoForm() {
               className="form-control"
               placeholder="Title"
               onChange={handleChange}
-              value="FIXME"
+              value={value.title}
               aria-label="Title"
           />
         </div>
@@ -40,7 +58,7 @@ function TodoForm() {
               className="form-control"
               placeholder="Description"
               onChange={handleChange}
-              value="FIXME"
+              value={value.description}
               aria-label="Description"
           />
         </div>
@@ -52,7 +70,7 @@ function TodoForm() {
             </label>
             <select id="newTodo-priority"
                     name="priority"
-                    value="FIXME"
+                    value={value.priority}
                     onChange={handleChange}
                     className="form-control form-control-sm d-inline-flex"
             >

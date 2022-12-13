@@ -22,6 +22,7 @@ const [todos, setTodos] = useState(initialTodos);
   /** add a new todo to list */
   //passed down to todoForm
   function create(newTodo) {
+    newTodo.id = uuid();
     let newTodos = [...todos, newTodo];
     setTodos(newTodos);
   }
@@ -63,8 +64,7 @@ const [todos, setTodos] = useState(initialTodos);
 
             <section>
               <h3 className="mb-3">Add Nü</h3>
-              FIXME
-              <TodoForm create={create}/>
+              <TodoForm handleSave={create}/>
             </section>
           </div>
 
