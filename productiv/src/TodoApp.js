@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 
 import TopTodo from "./TopTodo";
 import EditableTodoList from "./EditableTodoList";
+import TodoForm from "./TodoForm";
 
 /** App for managing a todo list.
  *
@@ -15,18 +16,33 @@ import EditableTodoList from "./EditableTodoList";
  * App -> TodoApp -> { TodoForm, EditableTodoList }
  */
 
-function TodoApp() {
+function TodoApp({ initialTodos }) {
+const [todos, setTodos] = useState(initialTodos);
 
   /** add a new todo to list */
+  //passed down to todoForm
   function create(newTodo) {
+    let newTodos = [...todos, newTodo];
+    setTodos(newTodos);
   }
 
   /** update a todo with updatedTodo */
+  //passed to editableTodoList -> editableTodo
   function update(updatedTodo) {
+    for(let todo of todos){
+      if(todo.id === updatedTodo.id){
+        todo = updatedTodo;
+      }
+    }
+    let newTodos = [...todos];
+    setTodos(newTodos);
   }
 
   /** delete a todo by id */
+  //passed to editableTodoList -> editableTodo
   function remove(id) {
+    let newTodos = todos.filter(todo => todo.id !== id);
+    setTodos(newTodos);
   }
 
   return (
@@ -34,7 +50,7 @@ function TodoApp() {
         <div className="row">
 
           <div className="col-md-6">
-            <EditableTodoList /> OR
+            <EditableTodoList update={update} remove={remove}/> OR
             <span className="text-muted">You have no todos.</span>
           </div>
 
@@ -48,6 +64,7 @@ function TodoApp() {
             <section>
               <h3 className="mb-3">Add Nü</h3>
               FIXME
+              <TodoForm create={create}/>
             </section>
           </div>
 
